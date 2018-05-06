@@ -16,3 +16,5 @@ Imports:
     rlang,
     tidyr
 Suggests: testthat,covr
+Depends:
+    R (>= 3.0)
