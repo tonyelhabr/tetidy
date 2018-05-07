@@ -1,7 +1,7 @@
 Package: tetidy
 Type: Package
 Title: Tony's Personal Package
-Version: 0.0.0.0
+Version: 0.0.1.0
 Author: Tony ElHabr <anthonyelhabr@gmail.com>
 Authors@R: person("Tony", "ElHabr", email = "anthonyelhabr@gmail.com", role = c("aut", "cre"))
 Description: This is a package with functions for that Tony commonly uses for data
@@ -17,4 +17,4 @@ Imports:
     tidyr
 Suggests: testthat,covr
 Depends:
-    R (>= 3.0)
+    R (>= 3.4.1)

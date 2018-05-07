@@ -1,8 +1,8 @@
 
-context("summarise_stats")
+context("summarise")
 require("datasets")
 
-test_that("summarise_stats", {
+test_that("summarise", {
 
   actual_df <- summarise_stats_at(mtcars, "mpg")
   actual <- c(as.matrix(actual_df["mean"]))

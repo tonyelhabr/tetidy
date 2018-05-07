@@ -70,12 +70,6 @@ Here is a list of all functions in the package.
 
 ```{r echo = FALSE}
 library("tetidy")
-# ls_vars_all <- ls("package:tetidy")
-# ls_vars_ext_start <- grep("^import|^export", ls_vars_all, value = TRUE)
-# ls_vars_ext_main <- grep("ext$", ls_vars_ext_start, value = TRUE)
-# ls_vars_other <- setdiff(ls_vars_all, ls_vars_ext_start)
-# ?tetidy::`tetidy-package`
-# print(sort(c(ls_vars_io_main, ls_vars_other)))
 ls("package:tetidy")
 ```
 
@@ -83,7 +77,7 @@ ls("package:tetidy")
 
 ...
 
-```{r include = FALSE}
+```{r include = FALSE, eval = FALSE}
 # print(covr::package_coverage())
 ```
 
