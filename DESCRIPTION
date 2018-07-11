@@ -14,7 +14,8 @@ Imports:
     tibble,
     dplyr,
     rlang,
-    tidyr
+    tidyr,
+    fuzzyjoin
 Suggests: testthat,covr
 Depends:
     R (>= 3.4.1)

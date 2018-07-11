@@ -51,3 +51,52 @@ summarise_join_stats <-
     ret <- dplyr::bind_cols(tibble::tibble(x = x_chr, y = y_chr), ret)
     ret
   }
+
+
+#' Join two data.frames using fuzzy string matching.
+#'
+#' @description Join two data.frames using fuzzy string matching.
+#' @details This function is effectively a customized version of the \code{stringdist_join}
+#' functions in the \code{fuzzyjoin} package.
+#' Additionally, this function is primarily intended to be uzed before \code{tetidy::summarise_join_stats}
+#' with \code{mode = "full"}.
+#' @inheritParams fuzzyjoin::stringdist_join
+#' @param cols_join character. Names of columns in \code{x} and \code{y} to join upon.
+#' @param copy logical. Whether or not to keep common columns
+#' @param suffix_x,suffix_y For duplicate variables in \code{x} and \code{y}, these
+#' are used for differentiating the two. Alternatively, \code{suffix} can be specified directly
+#' (in the same manner for \code{suffix} in \code{dplyr}'s join functions).
+#' @param suffix dplyr::join
+#' @return data.frame
+#' @export
+join_fuzzily <-
+  function(x = NULL,
+           y = NULL,
+           mode = "inner",
+           max_dist = 0,
+           ...,
+           cols_join = intersect(names(x), names(y)),
+           copy = FALSE,
+           suffix_x = "_x",
+           suffix_y = "_y",
+           suffix = c(suffix_x, suffix_y)) {
+
+    f <- sprintf("fuzzyjoin::stringdist_%s_join", mode)
+    suffix_x <- suffix[1]
+    suffix_y <- suffix[2]
+    ret <-
+      do_call_with(f, list(x = x, y = y, by = cols_join, max_dist = max_dist, ...))
+
+    . <- NULL
+    ret <-
+      dplyr::rename_at(ret, dplyr::vars(dplyr::ends_with(".x")), funs(gsub("\\.x", suffix_x, .)))
+    ret <-
+      dplyr::rename_at(ret, dplyr::vars(dplyr::ends_with(".y")), funs(gsub("\\.y", suffix_y, .)))
+
+    if(copy) {
+      cols_join_y <- rlang::quo_name(paste0(cols_join, suffix_y))
+      ret <-
+        dplyr::left_join(ret, dplyr::mutate(y, !!!rlang::sym(cols_join_y) := !!!rlang::sym(cols_join)), by = cols_join)
+    }
+    ret
+  }
