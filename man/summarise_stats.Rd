@@ -6,12 +6,11 @@
 \alias{summarise_stats_by_at}
 \title{Summary statistics for a data.frame}
 \usage{
-summarise_stats_at(data = NULL, col = NULL, ..., na.rm = TRUE,
-  tidy = FALSE)
+summarise_stats_at(data, col, ..., na.rm = TRUE, tidy = FALSE)
 
-summarise_stats(data = NULL, col, ..., na.rm = TRUE, tidy = FALSE)
+summarise_stats(data, col, ..., na.rm = TRUE, tidy = FALSE)
 
-summarise_stats_by_at(data = NULL, col = NULL, cols_grp = NULL, ...)
+summarise_stats_by_at(data, col, cols_grp, ...)
 }
 \arguments{
 \item{data}{data.frame.}

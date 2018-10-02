@@ -4,31 +4,31 @@
 #'
 #' @description A customized summary of a data.frame.
 #' @details The purpose of this function is equivalent to that of similar functions in
-#' other packages, such as \code{skimr::skim()}.
-#' This function outputs the following \code{n}, \code{mean}, \code{median}, \code{sd},
-#' \code{min}, \code{max}, \code{zn1}, \code{zp1}, \code{q25}, \code{q75}, \code{q05}, \code{q95}.
+#' other packages, such as `skimr::skim()`.
+#' This function outputs the following `n`, `mean`, `median`, `sd`,
+#' `min`, `max`, `zn1`, `zp1`, `q25`, `q75`, `q05`, `q95`.
 #'
-#' The \code{_at} versions of this function are SE evaluation. (i.e. They take characters
-#' as column names.) The \code{_by} version(s) of this function allows
+#' The `_at` versions of this function are SE evaluation. (i.e. They take characters
+#' as column names.) The `_by` version(s) of this function allows
 #' for groups to be specificed as an input, although this function will detect groups
-#' and respect their integrity  (meaning that the \code{_by} version(s) are simply
+#' and respect their integrity  (meaning that the `_by` version(s) are simply
 #' provided as an alternative means).
 #'
 #' @param data data.frame.
-#' @param col charactor for SE version; symbol for NSE version. Name of column in \code{data} on which to perform operations.
+#' @param col charactor for SE version; symbol for NSE version. Name of column in `data` on which to perform operations.
 #' @param ... dots. Arguments passed to stats functions used internally.
 #' @param na.rm logical. Argument passed to stats function used internally.
 #' @param tidy logical. Whether to put output in long (i.e. tidy) format.
 #' @return data.frame.
 #' @export
 #' @rdname summarise_stats
-#' @seealso \url{https://github.com/ropenscilabs/skimr/blob/master/R/skim.R}.
+#' @seealso <https://github.com/ropenscilabs/skimr/blob/master/R/skim.R>.
 #' @importFrom stats median sd quantile
 #' @importFrom tidyr gather
 #' @importFrom tibble as_tibble
 summarise_stats_at <-
-  function(data = NULL,
-           col = NULL,
+  function(data,
+           col,
            ...,
            na.rm = TRUE,
            tidy = FALSE) {
@@ -40,7 +40,6 @@ summarise_stats_at <-
     stopifnot(is.logical(tidy))
     is_grouped <- ifelse(is.null(dplyr::groups(data)), FALSE, TRUE)
     if (is_grouped) {
-      # browser()
       cols_grp_chr <- as.character(dplyr::groups(data))
       cols_grp <- rlang::syms(cols_grp_chr)
       data <- dplyr::group_by(data, !!!cols_grp)
@@ -52,7 +51,7 @@ summarise_stats_at <-
 
     data <- dplyr::mutate(data, n = sum(!is.na(!!col)))
 
-    ret <-
+    res <-
       dplyr::summarise_at(
         data,
         dplyr::vars(!!col),
@@ -72,29 +71,29 @@ summarise_stats_at <-
         )
       )
 
-    ret <- dplyr::ungroup(ret)
+    res <- dplyr::ungroup(res)
 
     if (tidy) {
       stat <- NULL
       value <- NULL
-      # ret <- tidyr::gather(ret, stat, value)
+      # res <- tidyr::gather(res, stat, value)
       if (!is.null(cols_grp)) {
-        cols_gath_chr <- setdiff(names(ret), cols_grp)
-        ret <-
-          suppressWarnings(tidyr::gather(ret, stat, value, !!!rlang::syms(cols_gath_chr), convert = TRUE))
+        cols_gath_chr <- setdiff(names(res), cols_grp)
+        res <-
+          suppressWarnings(tidyr::gather(res, stat, value, !!!rlang::syms(cols_gath_chr), convert = TRUE))
       } else {
-        ret <- suppressWarnings(tidyr::gather(ret, stat, value, convert = TRUE))
+        res <- suppressWarnings(tidyr::gather(res, stat, value, convert = TRUE))
       }
-      ret <- tibble::as_tibble(ret)
+      res <- tibble::as_tibble(res)
     }
-    ret
+    res
 
   }
 
 #' @rdname summarise_stats
 #' @export
 summarise_stats <-
-  function(data = NULL,
+  function(data,
            col,
            ...,
            na.rm = TRUE,
@@ -112,17 +111,17 @@ summarise_stats <-
 #' @importFrom rlang !!! syms
 #' @importFrom dplyr group_by ungroup arrange
 summarise_stats_by_at <-
-  function(data = NULL,
-           col = NULL,
-           cols_grp = NULL,
+  function(data,
+           col,
+           cols_grp,
            ...) {
     stopifnot(is.character(col))
     stopifnot(is.character(cols_grp))
     stopifnot(length(intersect(names(data), cols_grp)) == length(cols_grp))
     cols_grp <- rlang::syms(cols_grp)
-    ret <- data
-    ret <- dplyr::group_by(ret, !!!cols_grp)
-    ret <- summarise_stats_at(ret, col, ...)
-    ret <- dplyr::ungroup(ret)
-    ret
+    res <- data
+    res <- dplyr::group_by(res, !!!cols_grp)
+    res <- summarise_stats_at(res, col, ...)
+    res <- dplyr::ungroup(res)
+    res
   }

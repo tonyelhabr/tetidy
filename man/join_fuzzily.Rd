@@ -4,7 +4,7 @@
 \alias{join_fuzzily}
 \title{Join two data.frames using fuzzy string matching.}
 \usage{
-join_fuzzily(x = NULL, y = NULL, mode = "inner", max_dist = 0, ...,
+join_fuzzily(x, y, mode = "inner", max_dist = 0, ...,
   cols_join = intersect(names(x), names(y)), copy = FALSE,
   suffix_x = "_x", suffix_y = "_y", suffix = c(suffix_x, suffix_y))
 }
@@ -40,4 +40,7 @@ This function is effectively a customized version of the \code{stringdist_join}
 functions in the \code{fuzzyjoin} package.
 Additionally, this function is primarily intended to be uzed before \code{tetidy::summarise_join_stats}
 with \code{mode = "full"}.
+}
+\seealso{
+\code{\link[fuzzyjoin:stringdist_join]{fuzzyjoin::stringdist_join()}}
 }

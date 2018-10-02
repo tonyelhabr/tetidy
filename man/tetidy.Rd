@@ -6,5 +6,5 @@
 \alias{tetidy-package}
 \title{tetidy}
 \description{
-This is Tony's package for tidyverse-like functions.
+This is Tony's package for his \code{{tidyverse}}-like functions.
 }

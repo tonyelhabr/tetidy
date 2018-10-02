@@ -5,9 +5,9 @@
 \alias{pull_distinctly}
 \title{\code{dplyr::distinct()} + \code{dplyr::arrange()} + \code{dplyr::pull()}}
 \usage{
-pull_distinctly_at(data = NULL, col = NULL)
+pull_distinctly_at(data, col)
 
-pull_distinctly(data = NULL, col = NULL)
+pull_distinctly(data, col)
 }
 \arguments{
 \item{data}{data.frame.}

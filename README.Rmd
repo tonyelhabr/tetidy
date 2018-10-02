@@ -2,22 +2,7 @@
 output: github_document
 ---
  
----
- 
- 
----
- 
 [![Project Status: Active ? The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
- 
----
- 
-[![minimal R version](https://img.shields.io/badge/R%3E%3D-NA-6666ff.svg)](https://cran.r-project.org/)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/tetidy)](https://cran.r-project.org/package=tetidy)
-[![packageversion](https://img.shields.io/badge/Package%20version-0.0.0.0-orange.svg?style=flat-square)](commits/master)
- 
----
- 
-[![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-yellowgreen.svg)](/commits/master)
 
 ```{r echo = FALSE}
 knitr::opts_chunk$set(
@@ -58,7 +43,7 @@ magick::image_write(magick::image_scale(logo, "120"), path = path_logo)
 
 ##  Introduction
 
-This package contains functions that I use often in projects.
+This package contains `{tidyverse}`-like functions that I use often in projects.
 
 ### Installation
 
@@ -77,8 +62,9 @@ ls("package:tetidy")
 
 ...
 
-```{r include = FALSE, eval = FALSE}
-# print(covr::package_coverage())
+```{r covrg, include = FALSE, eval = FALSE}
+covrg <- covr::package_coverage()
+print(covrg)
 ```
 
 ### Syntax
@@ -88,5 +74,5 @@ ls("package:tetidy")
 
 ## Examples
 
-Unfortunately, none (right now).
+TODO!
 

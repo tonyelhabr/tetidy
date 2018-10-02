@@ -1,14 +1,14 @@
 
 # NOTE: This is copied from the teproj package.
-#' \code{do.call()} with package namespace
+#' `do.call()` with package namespace
 #'
-#' @description Allows a package to explicitly included in \code{do.call()}
+#' @description Allows a package to explicitly included in `do.call()`
 #' @details None.
 #' @param what character. package name and function specified in explicit
-#' namespace notation (i.e. \code{package::function}).
-#' @param args list. Arguments passed to function parsed from \code{what}.
-#' @param ... dots. Arguments passed to \code{do.call()}.
-#' @source \url{https://stackoverflow.com/questions/10022436/do-call-in-combination-with}.
+#' namespace notation (i.e. `package::function`).
+#' @param args list. Arguments passed to function parsed from `what`.
+#' @param ... dots. Arguments passed to `do.call()`.
+#' @source <https://stackoverflow.com/questions/10022436/do-call-in-combination-with>.
 #' @export
 do_call_with <- function(what, args, ...) {
   if (is.character(what)) {

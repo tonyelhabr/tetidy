@@ -4,7 +4,7 @@
 \alias{count_arrange_at}
 \title{\code{dplyr::count()} + \code{dplyr::arrange()}}
 \usage{
-count_arrange_at(data = NULL, ...)
+count_arrange_at(data, ...)
 }
 \arguments{
 \item{data}{data.frame.}

@@ -6,11 +6,11 @@
 \alias{count_arrange}
 \title{\code{dplyr::mutate(... dplyr::row_number(dplyr::desc(.)))}}
 \usage{
-rank_arrange_at(data = NULL, col = NULL, col_out = "rnk", pretty = TRUE)
+rank_arrange_at(data, col, col_out = "rnk", pretty = TRUE)
 
-rank_arrange(data = NULL, col = NULL, ...)
+rank_arrange(data, col, ...)
 
-count_arrange(data = NULL, ...)
+count_arrange(data, ...)
 }
 \arguments{
 \item{data}{data.frame.}

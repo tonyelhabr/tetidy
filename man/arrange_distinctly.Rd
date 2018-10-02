@@ -5,9 +5,9 @@
 \alias{arrange_distinctly}
 \title{\code{dplyr::arrange()} + \code{dplyr::distinct()}}
 \usage{
-arrange_distinctly_at(data = NULL, ...)
+arrange_distinctly_at(data, ...)
 
-arrange_distinctly(data = NULL, ...)
+arrange_distinctly(data, ...)
 }
 \arguments{
 \item{data}{data.frame.}

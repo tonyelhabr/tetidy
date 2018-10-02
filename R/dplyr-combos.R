@@ -1,14 +1,14 @@
 
-#' \code{dplyr::distinct()} + \code{dplyr::arrange()} + \code{dplyr::pull()}
+#' `dplyr::distinct()` + `dplyr::arrange()` + `dplyr::pull()`
 #'
-#' @description Shorthand for \code{dplyr} functions called consecutively.
+#' @description Shorthand for `dplyr` functions called consecutively.
 #' @details None.
 #' @inheritParams summarise_stats
 #' @return vector.
 #' @rdname pull_distinctly
 #' @export
 pull_distinctly_at <-
-  function(data = NULL, col = NULL) {
+  function(data, col) {
 
     stopifnot(is.data.frame(data))
     stopifnot(is.character(col), length(col) == 1)
@@ -18,30 +18,30 @@ pull_distinctly_at <-
     col <- rlang::sym(col)
     # stopifnot(rlang::is_quosure(col), length(col) == 1, any(names(data) == col))
 
-    ret <- dplyr::distinct(data, !!col)
-    ret <- dplyr::arrange(ret, !!col)
-    ret <- dplyr::pull(ret, !!col)
-    ret
+    res <- dplyr::distinct(data, !!col)
+    res <- dplyr::arrange(res, !!col)
+    res <- dplyr::pull(res, !!col)
+    res
   }
 
 #' @rdname pull_distinctly
 #' @export
 pull_distinctly <-
-  function(data = NULL, col = NULL) {
+  function(data, col) {
     pull_distinctly_at(data = data, col = rlang::quo_text(rlang::enquo(col)))
   }
 
-#' \code{dplyr::arrange()} + \code{dplyr::distinct()}
+#' `dplyr::arrange()` + `dplyr::distinct()`
 #'
-#' @description Shorthand for \code{dplyr} functions called consecutively.
+#' @description Shorthand for `dplyr` functions called consecutively.
 #' @details None.
 #' @inheritParams summarise_stats
-#' @param ... dots. Bare names of columns in \code{data} on which to perform operations.
+#' @param ... dots. Bare names of columns in `data` on which to perform operations.
 #' @rdname arrange_distinctly
 #' @return data.frame
 #' @export
 arrange_distinctly_at <-
-  function(data = NULL, ...) {
+  function(data, ...) {
 
     stopifnot(!is.null(data), is.data.frame(data))
     # dots <- alist(...)
@@ -53,16 +53,16 @@ arrange_distinctly_at <-
     # }
     # stopifnot(rlang::is_quosures(cols), length(cols) >= 1)
 
-    ret <- data
-    ret <- dplyr::distinct(ret, !!!cols)
-    ret <- dplyr::arrange(ret, !!!cols)
-    ret
+    res <- data
+    res <- dplyr::distinct(res, !!!cols)
+    res <- dplyr::arrange(res, !!!cols)
+    res
   }
 
 #' @rdname arrange_distinctly
 #' @export
 arrange_distinctly <-
-  function(data = NULL, ...) {
+  function(data, ...) {
 
     stopifnot(!is.null(data), is.data.frame(data))
     # dots <- alist(...)
@@ -72,10 +72,10 @@ arrange_distinctly <-
     #   cols <- tidyselect::everything(data)
     # }
     stopifnot(rlang::is_quosures(cols), length(cols) >= 1)
-    ret <- data
-    ret <- dplyr::distinct(ret, !!!cols)
-    ret <- dplyr::arrange(ret, !!!cols)
-    ret
+    res <- data
+    res <- dplyr::distinct(res, !!!cols)
+    res <- dplyr::arrange(res, !!!cols)
+    res
   }
 
 # TODO: Figure out a way to capture bare dots, then convert them to separate
@@ -83,7 +83,7 @@ arrange_distinctly <-
 # #' @rdname arrange_distinctly
 # #' @export
 # arrange_distinctly <-
-#   function(data = NULL, ...) {
+#   function(data, ...) {
 #     dots <- rlang::quo_text(rlang::enquos(...))
 #     dots2a <- rlang::quo_text(rlang::enquos(...))
 #     dots2b <- rlang::quo_name(rlang::enquos(...))
@@ -92,33 +92,33 @@ arrange_distinctly <-
 #     arrange_distinctly_at(data = data, dots2b)
 #   }
 
-#' \code{dplyr::row_number(dplyr::desc(.))}
+#' `dplyr::row_number(dplyr::desc(.))`
 #'
-#' @description Shorthand for \code{dplyr} functions called consecutively.
+#' @description Shorthand for `dplyr` functions called consecutively.
 #' @details None.
 #' @param x symbol. Name of column on which to perform operations. Should be numeric.
 #' @export
 rank_unique <-
-  function(x = NULL) {
+  function(x) {
     stopifnot(is.numeric(x))
     dplyr::row_number(dplyr::desc(x))
   }
 
-#' \code{dplyr::mutate(... dplyr::row_number(dplyr::desc(.)))}
+#' `dplyr::mutate(... dplyr::row_number(dplyr::desc(.)))`
 #'
-#' @description Shorthand for \code{dplyr} functions called consecutively.
+#' @description Shorthand for `dplyr` functions called consecutively.
 #' @details None.
 #' @inheritParams summarise_stats
 #' @param col_out charactor for SE version; symbol for NSE version. Name of column in returned data.frame
 #' corresponding to rank.
-#' @param pretty logical. Whether to re-arrange columns such that \code{col_out} is the first column.
+#' @param pretty logical. Whether to re-arrange columns such that `col_out` is the first column.
 #' @param ... dots. For NSE version, passed to SE version.
 #' @return data.frame.
 #' @rdname rank_arrange
 #' @export
 rank_arrange_at <-
-  function(data = NULL,
-           col = NULL,
+  function(data,
+           col,
            col_out = "rnk",
            pretty = TRUE) {
     stopifnot(is.data.frame(data))
@@ -127,55 +127,55 @@ rank_arrange_at <-
     stopifnot(is.logical(pretty))
     col <- rlang::sym(col)
     col_out <- rlang::sym(col_out)
-    # ret <- dplyr::mutate(data, !!col_out := dplyr::row_number(dplyr::desc(!!col)))
-    ret <- dplyr::mutate(data, !!col_out := rank_unique(!!col))
-    ret <- dplyr::arrange(ret, !!col_out)
+    # res <- dplyr::mutate(data, !!col_out := dplyr::row_number(dplyr::desc(!!col)))
+    res <- dplyr::mutate(data, !!col_out := rank_unique(!!col))
+    res <- dplyr::arrange(res, !!col_out)
 
     if(pretty) {
-      ret <- dplyr::select(ret, !!col_out, dplyr::everything())
+      res <- dplyr::select(res, !!col_out, dplyr::everything())
     }
-    ret
+    res
   }
 
 #' @rdname rank_arrange
 #' @export
 rank_arrange <-
-  function(data = NULL, col = NULL, ...) {
+  function(data, col, ...) {
     rank_arrange_at(data = data,
                     col = rlang::quo_text(rlang::enquo(col)),
                     ...)
   }
 
-#' \code{dplyr::count()} + \code{dplyr::arrange()}
+#' `dplyr::count()` + `dplyr::arrange()`
 #'
-#' @description Shorthand for \code{dplyr} functions called consecutively.
+#' @description Shorthand for `dplyr` functions called consecutively.
 #' @details Note that arrangeing is performed on the column used to compute
-#' the value for \code{dplyr::count()}, which is differrent than simply
-#' calling \code{dplyr::count(..., sort = TRUE)} (which sorts by the output column \code{n}).
+#' the value for `dplyr::count()`, which is differrent than simply
+#' calling `dplyr::count(..., sort = TRUE)` (which sorts by the output column `n`).
 #' @inheritParams arrange_distinctly
 #' @return data.frame.
 #' @rdname count_arrange
 #' @export
 count_arrange_at <-
-  function(data = NULL, ...) {
+  function(data, ...) {
 
     stopifnot(is.data.frame(data))
     cols <- rlang::syms(...)
 
-    ret <- dplyr::count(data, !!!cols)
-    ret <- dplyr::arrange(ret, !!!cols)
-    ret
+    res <- dplyr::count(data, !!!cols)
+    res <- dplyr::arrange(res, !!!cols)
+    res
   }
 
 #' @rdname rank_arrange
 #' @export
 count_arrange <-
-  function(data = NULL, ...) {
+  function(data, ...) {
 
     stopifnot(is.data.frame(data))
     cols <- rlang::enquos(...)
 
-    ret <- dplyr::count(data, !!!cols)
-    ret <- dplyr::arrange(ret, !!!cols)
-    ret
+    res <- dplyr::count(data, !!!cols)
+    res <- dplyr::arrange(res, !!!cols)
+    res
   }

@@ -4,7 +4,7 @@
 \alias{summarise_join_stats}
 \title{Calculate how "well" two data.frames joined}
 \usage{
-summarise_join_stats(data = NULL, x = NULL, y = NULL)
+summarise_join_stats(data, x, y)
 }
 \arguments{
 \item{data}{data.frame. This should already by the result of a join.}

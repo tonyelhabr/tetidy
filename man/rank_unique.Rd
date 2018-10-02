@@ -4,7 +4,7 @@
 \alias{rank_unique}
 \title{\code{dplyr::row_number(dplyr::desc(.))}}
 \usage{
-rank_unique(x = NULL)
+rank_unique(x)
 }
 \arguments{
 \item{x}{symbol. Name of column on which to perform operations. Should be numeric.}
