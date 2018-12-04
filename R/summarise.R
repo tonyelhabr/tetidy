@@ -9,24 +9,24 @@
 #' `min`, `max`, `zn1`, `zp1`, `q25`, `q75`, `q05`, `q95`.
 #'
 #' The `_at` versions of this function are SE evaluation. (i.e. They take characters
-#' as column names.) The `_by` version(s) of this function allows
+#' as column names.) ~~The `_by` version(s) of this function allows
 #' for groups to be specificed as an input, although this function will detect groups
 #' and respect their integrity  (meaning that the `_by` version(s) are simply
-#' provided as an alternative means).
+#' provided as an alternative means).~~
 #'
 #' @param data data.frame.
-#' @param col charactor for SE version; symbol for NSE version. Name of column in `data` on which to perform operations.
+#' @param col charactor for SE version; symbol for NSE version.
+#' Name of column in `data` on which to perform operations.
 #' @param ... dots. Arguments passed to stats functions used internally.
 #' @param na.rm logical. Argument passed to stats function used internally.
-#' @param tidy logical. Whether to put output in long (i.e. tidy) format.
-#' @return data.frame.
-#' @export
+#' @param tidy logical. Whether to put output in long (i.e. .tidy) format.
+#' @return A [tibble][tibble::tibble-package].
 #' @rdname summarise_stats
 #' @seealso <https://github.com/ropenscilabs/skimr/blob/master/R/skim.R>.
 #' @importFrom stats median sd quantile
 #' @importFrom tidyr gather
 #' @importFrom tibble as_tibble
-summarise_stats_at <-
+summarise_stats_impl <-
   function(data,
            col,
            ...,
@@ -92,36 +92,14 @@ summarise_stats_at <-
 
 #' @rdname summarise_stats
 #' @export
-summarise_stats <-
-  function(data,
-           col,
-           ...,
-           na.rm = TRUE,
-           tidy = FALSE) {
-    summarise_stats_at(data = data,
-                       col = rlang::quo_text(rlang::enquo(col)),
-                       ...,
-                       na.rm = na.rm,
-                       tidy = tidy)
+summarise_stats_at <-
+  function(.data, .col, ...) {
+    summarise_stats_impl(data = .data, col = .col, ...)
   }
 
 #' @rdname summarise_stats
-#' @param cols_grp charactor for SE version; symbol for NSE version.
 #' @export
-#' @importFrom rlang !!! syms
-#' @importFrom dplyr group_by ungroup arrange
-summarise_stats_by_at <-
-  function(data,
-           col,
-           cols_grp,
-           ...) {
-    stopifnot(is.character(col))
-    stopifnot(is.character(cols_grp))
-    stopifnot(length(intersect(names(data), cols_grp)) == length(cols_grp))
-    cols_grp <- rlang::syms(cols_grp)
-    res <- data
-    res <- dplyr::group_by(res, !!!cols_grp)
-    res <- summarise_stats_at(res, col, ...)
-    res <- dplyr::ungroup(res)
-    res
+summarise_stats <-
+  function(.data, .col, ...) {
+    summarise_stats_at(.data = .data, .col = rlang::quo_text(rlang::enquo(.col)), ...)
   }

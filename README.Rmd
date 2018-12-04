@@ -14,38 +14,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r eval = FALSE, echo = FALSE}
-viz_void <- ggplot2::ggplot() + ggplot2::theme_void()
-
-dir_logo <- file.path("man", "figures")
-if(!exists(dir_logo)) {
-  dir.create(dir_logo, recursive = TRUE)
-}
-path_logo <- file.path(dir_logo, paste0("logo.png"))
-hexSticker::sticker(
-  subplot = viz_void,
-  package = "tetidy",
-  filename = path_logo,
-  p_y = 1.0,
-  p_color = "black",
-  # p_family = "sans",
-  p_size = 40,
-  h_size = 1.5,
-  h_color = "black",
-  h_fill = "yellow"
-)
-logo <- magick::image_read(path_logo)
-magick::image_write(magick::image_scale(logo, "120"), path = path_logo)
-# badgecreatr::badgeplacer(status = "wip", githubaccount = "tonyelhabr", githubrepo = "tetidy")
-```
-
 # tetidy <img src="man/figures/logo.png" align="right"/>
 
 ##  Introduction
 
 This package contains `{tidyverse}`-like functions that I use often in projects.
 
-### Installation
+## Installation
 
 `devtools::install_github("tonyelhabr/tetidy")`.
 
@@ -58,18 +33,58 @@ library("tetidy")
 ls("package:tetidy")
 ```
 
-### Inspiration
 
-...
+## Things To Do/Consider To Be More `{tidyverse}`-like
 
-```{r covrg, include = FALSE, eval = FALSE}
-covrg <- covr::package_coverage()
-print(covrg)
-```
+### In General
 
-### Syntax
+- Change all references of `col`s to `var`s.
+- Should change all `_at` functions to be use `manip_at()` internal function,
+as shown in `mutate_at()` and `summarise_at()` implementations in `{dplyr}`.
+(See <https://github.com/tidyverse/dplyr/blob/2e6ca1676ece390b7a3e0a76b52c6bbf1464a180/R/colwise-mutate.R>.)
+- Be opinionated about the prefixing of argument names with `.`. In general,
+implement the take-aways from the discussion at
+ https://community.rstudio.com/t/function-argument-naming-conventions-x-vs-x/7764/15
+(discussion on `{tidyverse}` package function argument naming conventions).
+(As explained in the 
+[`{forcats}` 0.3.0  release notes](https://www.tidyverse.org/articles/2018/02/forcats-0-3-0/),
+"Consistent with other tidyverse packages, all functions that take ... 
+now use tidy dots. This means that you can use !!! to splice in a list of values."
+Also, per Hadley's response at <https://github.com/tidyverse/style/issues/75>
+"It is not a general principle. It's something that only apply to FP tools like 
+purrr, because you don't want to confuse the arguments to map() with the 
+arguments to .f".)
 
-...
+
+### With Specific Functions
+
+- `pull_distinctly()`
+    - [check] Use `.data` and `var` to match `dplyr::pull()` argument names exactly.
+    
+- `arrange_distinctly()`
+    - [check] Use `.data` and `...` to match `dplyr::distinct()` argument names exactly.
+
+- `rank_unique(x)`
+    - Use `-xtfrm(x)` instead of `dplyr::row_number()` (which are equivalent)?
+
+- `rank_arrange()`
+    - Consider using `key` and `value` or `into` argument names (like `tidyr::gather()` and `tidyr::spread()`)
+    (instead of `var` and `var_out`.
+    - Keep `.data` argument name because it matches `dplyr::mutate`'s `.data`.
+    - Consider "splicing" dots to pass to mutate (instead of "hard-coding" function used with `mutate()`.
+    
+- `count_arrange()`
+    - Consider how `_at` form can better be combined with the non-suffixed form.
+
+- `summarise_stats()`
+
+- `join_fuzzily()`
+
+- `summarise_join_stats()`
+
+- `reorder_vars_at()`, `reorder_vars_at()`
+    - If a major re-haul were to be done to implement `{dplyr}`-like handling of `_at` functions,
+    then these would need to be updated.
 
 
 ## Examples

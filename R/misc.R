@@ -9,7 +9,6 @@
 #' @param args list. Arguments passed to function parsed from `what`.
 #' @param ... dots. Arguments passed to `do.call()`.
 #' @source <https://stackoverflow.com/questions/10022436/do-call-in-combination-with>.
-#' @export
 do_call_with <- function(what, args, ...) {
   if (is.character(what)) {
     fn <- strsplit(what, "::")[[1]]
