@@ -1,184 +1,82 @@
 
-
-
-#' `dplyr::distinct()` + `dplyr::arrange()` + `dplyr::pull()`
+#' `dplyr::pull()` + `unique()` + `sort()`
 #'
-#' @description Shorthand for `dplyr` functions called consecutively.
-#' @details None.
+#' Shorthand for `{dplyr}` functions called consecutively.
+#'
+#' @details This may be slower than `dplyr:;distinct()` +
+#'   `dplyr::arrange()` + `dplyr::pull()` (which was the original implementation).
 #' @inheritParams summarise_stats
-#' @return vector.
+#' @inheritParams dplyr::pull
+#' @inheritParams base::unique
+#' @inheritParams base::sort
+#' @return A vector (of the same type as `var`).
 #' @rdname pull_distinctly
 #' @export
-pull_distinctly_at <-
-  function(.data, var) {
-
-    stopifnot(is.data.frame(.data))
-    stopifnot(is.character(var), length(var) == 1)
-
-    # stopifnot(rlang::is_quosure(var), length(var) == 1, any(names(.data) == var))
-
-    var <- rlang::sym(var)
-    # stopifnot(rlang::is_quosure(var), length(var) == 1, any(names(.data) == var))
-
-    res <- dplyr::distinct(.data, !!col)
-    res <- dplyr::arrange(res, !!col)
-    res <- dplyr::pull(res, !!col)
-    res
-  }
-
-#' @rdname pull_distinctly
-#' @export
+#' @family dplyr-combos
 pull_distinctly <-
-  function(.data, var) {
-    pull_distinctly_at(.data = .data, var = rlang::quo_text(rlang::enquo(var)))
+  function(.data, var = -1, ..., decreasing = FALSE) {
+    data <- .validate_coerce_data(data)
+
+    var <- tidyselect::vars_pull(names(.data), !!rlang::enquo(var))
+    sort(unique(.data[[var]]), decreasing = decreasing, ...)
   }
 
-#' `dplyr::arrange()` + `dplyr::distinct()`
+
+#' `dplyr::distinct()` + `dplyr::arrange()`
 #'
-#' @description Shorthand for `dplyr` functions called consecutively.
-#' @details None.
+#' Shorthand for `{dplyr}` functions called consecutively.
+#'
+#' @section Borrowing from the `{tidyverse}`:
+#'   The logic for handling `...` is borrowed from a reivew of the internals for
+#'   `tidyr::unite()` and `tidyr::gather()`.
+#'
 #' @inheritParams summarise_stats
-#' @param ... dots. Bare names of columns in `.data` on which to perform operations.
+#' @inheritParams dplyr::distinct
+#' @inheritParams dplyr::arrange
 #' @rdname arrange_distinctly
 #' @return A [tibble][tibble::tibble-package].
 #' @export
-arrange_distinctly_at <-
-  function(.data, ...) {
-
-    stopifnot(!is.null(.data), is.data.frame(.data))
-    # dots <- alist(...)
-    # stopifnot(length(dots) >= 1)
-
-    cols <- rlang::syms(...)
-    # if (length(cols) == 0)  {
-    #   cols <- tidyselect::everything(.data)
-    # }
-    # stopifnot(rlang::is_quosures(cols), length(cols) >= 1)
-
-    res <- .data
-    res <- dplyr::distinct(res, !!!cols)
-    res <- dplyr::arrange(res, !!!cols)
-    res
-  }
-
-#' @rdname arrange_distinctly
-#' @export
+#' @family dplyr-combos
 arrange_distinctly <-
-  function(.data, ...) {
+  function(data, ..., .keep_all = FALSE, .by_group = FALSE) {
+    data <- .validate_coerce_data(data)
 
-    stopifnot(!is.null(.data), is.data.frame(.data))
-    # dots <- alist(...)
-    # stopifnot(length(dots) >= 1)
     cols <- rlang::enquos(...)
-    # if (length(cols) == 0)  {
-    #   cols <- tidyselect::everything(.data)
-    # }
-    stopifnot(rlang::is_quosures(cols), length(cols) >= 1)
-    res <- .data
-    res <- dplyr::distinct(res, !!!cols)
-    res <- dplyr::arrange(res, !!!cols)
+    # .validate_cols(data, cols)
+
+    res <- dplyr::distinct(data, !!!cols, .keep_all = .keep_all)
+    res <- dplyr::arrange(res, !!!cols, .by_group = .by_group)
     res
-  }
-
-# TODO: Figure out a way to capture bare dots, then convert them to separate
-# characters to pass to the SE version.
-# #' @rdname arrange_distinctly
-# #' @export
-# arrange_distinctly <-
-#   function(.data, ...) {
-#     dots <- rlang::quo_text(rlang::enquos(...))
-#     dots2a <- rlang::quo_text(rlang::enquos(...))
-#     dots2b <- rlang::quo_name(rlang::enquos(...))
-#     dots3 <- rlang::expr_name(rlang::exprs(...))
-#     browser()
-#     arrange_distinctly_at(.data = .data, dots2b)
-#   }
-
-#' `dplyr::row_number(dplyr::desc(.))`
-#'
-#' @description Shorthand for `dplyr` functions called consecutively.
-#' @details None.
-#' @param x symbol. Name of column on which to perform operations. Should be numeric.
-#' @export
-rank_unique <-
-  function(x) {
-    stopifnot(is.numeric(x))
-    dplyr::row_number(dplyr::desc(x))
-  }
-
-#' `dplyr::mutate(... dplyr::row_number(dplyr::desc(.)))`
-#'
-#' @description Shorthand for `dplyr` functions called consecutively.
-#' @details None.
-#' @inheritParams summarise_stats
-#' @param var_out charactor for SE version; symbol for NSE version. Name of column in returned data.frame
-#' corresponding to rank.
-#' @param .pretty logical. Whether to re-arrange columns such that `var_out` is the first column.
-#' @param ... dots. For NSE version, passed to SE version.
-#' @return A [tibble][tibble::tibble-package].
-#' @rdname rank_arrange
-#' @export
-rank_arrange_at <-
-  function(.data,
-           var,
-           var_out = "rnk",
-           pretty = TRUE) {
-
-    stopifnot(is.data.frame(.data))
-    stopifnot(is.character(var), length(var) == 1)
-    stopifnot(is.character(var_out), length(var_out) == 1)
-    stopifnot(is.logical(pretty))
-    var <- rlang::sym(var)
-    var_out <- rlang::sym(var_out)
-    # res <- dplyr::mutate(.data, !!var_out := dplyr::row_number(dplyr::desc(!!col)))
-    res <- dplyr::mutate(.data, !!var_out := rank_unique(!!var))
-    res <- dplyr::arrange(res, !!var_out)
-
-    if(pretty) {
-      res <- dplyr::select(res, !!var_out, dplyr::everything())
-    }
-    res
-  }
-
-#' @rdname rank_arrange
-#' @export
-rank_arrange <-
-  function(.data, var, ...) {
-    rank_arrange_at(.data = .data,
-                    var = rlang::quo_text(rlang::enquo(var)),
-                    ...)
   }
 
 #' `dplyr::count()` + `dplyr::arrange()`
 #'
-#' @description Shorthand for `dplyr` functions called consecutively.
-#' @details Note that arrangeing is performed on the column used to compute
-#' the value for `dplyr::count()`, which is differrent than simply
-#' calling `dplyr::count(..., sort = TRUE)` (which sorts by the output column `n`).
+#' @description Shorthand for `{dplyr}` functions called consecutively.
+#' @details Note that arranging is performed on the column used to compute
+#'   the value for `dplyr::count()`, which is different than simply
+#'   calling `dplyr::count(x, ..., sort = TRUE)` (which sorts by the output column `n`).
+#'   For this reason, no `sort` option is provided (to prevent the user from
+#'   mistakenly using this function in such a manner).
+#'
+#' @inheritSection arrange_distinctly Borrowing from the `{tidyverse}`
 #' @inheritParams arrange_distinctly
 #' @return A [tibble][tibble::tibble-package].
 #' @rdname count_arrange
 #' @export
-count_arrange_at <-
-  function(.data, ...) {
-
-    stopifnot(is.data.frame(.data))
-    cols <- rlang::syms(...)
-
-    res <- dplyr::count(.data, !!!cols)
-    res <- dplyr::arrange(res, !!!cols)
-    res
-  }
-
-#' @rdname rank_arrange
-#' @export
+#' @family dplyr-combos
 count_arrange <-
-  function(.data, ...) {
+  function(data, ...) {
 
-    stopifnot(is.data.frame(.data))
-    cols <- rlang::enquos(...)
+    data <- .validate_coerce_data(data)
 
-    res <- dplyr::count(.data, !!!cols)
+    # Reference: [tidyr::unite](https://github.com/tidyverse/tidyr/blob/master/R/unite.R)
+    if (rlang::dots_n(...) == 0) {
+      return(data)
+    } else {
+      cols <- tidyselect::vars_select(colnames(data), ...)
+    }
+
+    res <- dplyr::count(data, !!!cols)
     res <- dplyr::arrange(res, !!!cols)
     res
   }

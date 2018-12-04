@@ -1,11 +1,11 @@
 
 context("dplyr-combos")
 require("datasets")
-# testthat::test_file("tests/testthat/test-dplyr-combos.R")
+# testthat::test_file("tests/testthat/test-[file].R")
 
-test_that("pull_distinctly", {
+test_that("pull_distinctly() works as expected", {
 
-  actual <- pull_distinctly_at(mtcars, "carb")
+  actual <- pull_distinctly(mtcars, "carb")
   expect <- sort(unique(mtcars$carb))
   expect_equal(actual, expect)
 
@@ -14,10 +14,10 @@ test_that("pull_distinctly", {
 
 })
 
-test_that("arrange_distinctly", {
+test_that("arrange_distinctly() works as expected", {
 
-  actual <- arrange_distinctly_at(mtcars, "carb")
-  expect <- data.frame(carb = sort(unique(mtcars$carb)))
+  actual <- arrange_distinctly(mtcars, "carb")
+  expect <- tibble::as_tibble(carb = sort(unique(mtcars$carb)))
   expect_equal(actual, expect)
 
   actual <- arrange_distinctly(mtcars, carb)
@@ -25,37 +25,16 @@ test_that("arrange_distinctly", {
 
 })
 
-test_that("rank_arrange", {
+test_that("count_arrange() works as expected", {
 
-  actual <- rank_arrange_at(mtcars, "mpg")
-  expect <- with(mtcars, mtcars[order(-mpg),])
-  expect$rnk <- seq(1:nrow(mtcars))
-  expect <- expect[,c("rnk", names(mtcars))]
-  rownames(expect) <- NULL
-  expect_equal(actual, expect)
-
-  actual <- rank_arrange(mtcars, mpg)
-  expect_equal(actual, expect)
-
-  actual <- rank_arrange(mtcars, mpg, pretty = FALSE)
-  expect <- expect[, c(names(mtcars), c("rnk"))]
-  expect_equal(actual, expect)
-
-  actual <- rank_arrange(mtcars, mpg, col_out = "rank", pretty = FALSE)
-  names(expect) <- c(names(mtcars), c("rank"))
-  expect_equal(actual, expect)
-
-})
-
-test_that("count_arrange", {
-
-  actual <- count_arrange_at(mtcars, "carb")
-  expect_df <- with(mtcars, aggregate(mtcars, by = list(carb), FUN = length))
-  expect_df <- expect_df[, c("Group.1", "carb")]
-  expect_df <- with(expect_df, expect_df[order(Group.1),])
-  expect_df$n <- expect_df$carb
-  expect_df$carb <- expect_df$Group.1
-  expect <- expect_df[, c("carb", "n")]
+  actual <- count_arrange(mtcars, "carb")
+  expect <- tibble::as_tibble(mtcars)
+  expect_ <- with(expect, aggregate(expect, by = list(carb), FUN = length))
+  expect <- expect_[, c("Group.1", "carb")]
+  expect <- with(expect, expect[order(Group.1),])
+  expect$n <- expectf$carb
+  expect$carb <- expect$Group.1
+  expect <- expect[, c("carb", "n")]
   expect_equal(actual, expect)
 
   actual <- count_arrange(mtcars, carb)

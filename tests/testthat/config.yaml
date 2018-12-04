@@ -1,0 +1,39 @@
+default:
+  argparser:
+      required: false
+      arg: 
+      help: ""
+      type: 
+      nargs: 
+      short: 
+      flag: false
+        
+  yaml:
+    # general
+    export_data: true
+    dir_data: "data"
+    export_viz: true
+
+    multicore: true
+    n_core:
+      arg: 4
+      help: "How many cores?"
+      type: "integer"
+
+    # preprocess
+    year: 2018
+    path_data:
+      arg: "here.csv"
+
+    # runtime
+    hyperparamter1:
+     arg: 42
+     type: "numeric"
+       
+    hyperparamter2:
+     arg: -42
+     type: "numeric"
+
+production:
+  
+

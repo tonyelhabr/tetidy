@@ -2,7 +2,7 @@
 % Please edit documentation in R/join.R
 \name{summarise_join_stats}
 \alias{summarise_join_stats}
-\title{Calculate how "well" two data.frames joined}
+\title{Calculate how "well" two \code{data.frame}s joined}
 \usage{
 summarise_join_stats(data, x, y)
 }
@@ -13,19 +13,23 @@ summarise_join_stats(data, x, y)
 to compute metrics.}
 }
 \value{
-data.frame. One line summary of join metrics,
+A \link[tibble:tibble-package]{tibble}. One line summary of join metrics,
 including the following columns:
 \code{x}, \code{n_x}, \code{n_x_unjoined}, \code{x_in_y_pct} and their \code{y} analogues,
 as well as \code{n_joined}.
 }
 \description{
 Calculates the join count and percentage (by number of rows missing)
-of a data.frame that is the results of a join.
+of a d\code{ata.frame} that is the results of a join.
 }
 \details{
 This function is mostly useful after calling \code{dplyr::full_join()}
 (or a similar function), although it can also be useful for \code{dplyr::left_join()}
-or \code{dplyr::right_join()}.
+#' or \code{dplyr::right_join()}.
+
+The logic for
+handling \code{x} and \code{y} as strings/\code{quo}s was borrowed from a previous
+version of \code{tidyr::gather()}.
 }
 \seealso{
 \url{https://github.com/tidyverse/tidyr/blob/master/R/gather.R}

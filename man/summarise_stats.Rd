@@ -3,30 +3,30 @@
 \name{summarise_stats_at}
 \alias{summarise_stats_at}
 \alias{summarise_stats}
-\alias{summarise_stats_by_at}
-\title{Summary statistics for a data.frame}
+\title{Summary statistics for a \code{data.frame}}
 \usage{
-summarise_stats_at(data, col, ..., na.rm = TRUE, tidy = FALSE)
+summarise_stats_at(data, col, na.rm = TRUE, ..., tidy = FALSE,
+  key = "stat", value = "value")
 
-summarise_stats(data, col, ..., na.rm = TRUE, tidy = FALSE)
-
-summarise_stats_by_at(data, col, cols_grp, ...)
+summarise_stats(data, col, ...)
 }
 \arguments{
-\item{data}{data.frame.}
+\item{data}{A \code{data.frame}.}
 
-\item{col}{charactor for SE version; symbol for NSE version. Name of column in \code{data} on which to perform operations.}
+\item{col}{A character for the SE version; a symbol for NSE version.
+The name of column in \code{data} on which to perform operations.}
 
-\item{...}{dots. Arguments passed to stats functions used internally.}
+\item{na.rm}{A logical value passed to \code{{base}}`{stats}` functions used internally.}
 
-\item{na.rm}{logical. Argument passed to stats function used internally.}
+\item{...}{Additional arguments passed to internal functions.}
 
-\item{tidy}{logical. Whether to put output in long (i.e. tidy) format.}
+\item{tidy}{A logical value indicating whether to put output in long (i.e. "tidy") format.}
 
-\item{cols_grp}{charactor for SE version; symbol for NSE version.}
+\item{key, value}{Parameters corresponding with those of the same name for \code{tidyr::gather()}.
+For this function, these should be characters.}
 }
 \value{
-data.frame.
+A \link[tibble:tibble-package]{tibble}.
 }
 \description{
 A customized summary of a data.frame.
@@ -38,11 +38,11 @@ This function outputs the following \code{n}, \code{mean}, \code{median}, \code{
 \code{min}, \code{max}, \code{zn1}, \code{zp1}, \code{q25}, \code{q75}, \code{q05}, \code{q95}.
 
 The \code{_at} versions of this function are SE evaluation. (i.e. They take characters
-as column names.) The \code{_by} version(s) of this function allows
+as column names.) ~~The \code{_by} version(s) of this function allows
 for groups to be specificed as an input, although this function will detect groups
 and respect their integrity  (meaning that the \code{_by} version(s) are simply
-provided as an alternative means).
+provided as an alternative means).~~
 }
 \seealso{
-\url{https://github.com/ropenscilabs/skimr/blob/master/R/skim.R}.
+\code{\link[skimr:skim]{skimr::skim()}}, \code{\link[tidyr:gather]{tidyr::gather()}}
 }

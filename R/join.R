@@ -54,7 +54,7 @@ summarise_join_stats <-
   }
 
 
-#' Join two data.frames using fuzzy string matching.
+#' Join two `data.frame`s using fuzzy string matching.
 #'
 #' @description Join two `data.frame`s using fuzzy string matching.
 #' @details This function is effectively a customized version of the `stringdist_join`
@@ -67,8 +67,8 @@ summarise_join_stats <-
 #' # @param copy logical. Whether or not to keep common columns
 #' # @param suffix character (vector). For duplicate variables in `x` and `y`, this vector of
 #' # length two is used for differentiating the two.
-#' # (in the same manner for `suffix` in `dplyr`'s join functions).
-#' @return data.frame
+#' # (in the same manner for `suffix` in `{dplyr}`'s join functions).
+#' @return A [tibble][tibble::tibble-package].
 #' @export
 #' @seealso [fuzzyjoin::stringdist_join()] [dplyr::inner_join()]
 join_fuzzily <-
@@ -79,9 +79,7 @@ join_fuzzily <-
            ...,
            by = intersect(names(x), names(y)),
            copy = FALSE,
-           suffix_x = "_x",
-           suffix_y = "_y",
-           suffix = c(suffix_x, suffix_y)) {
+           suffix = c("_x", "_y")) {
 
     pkg <- "fuzzyjoin"
     if(!requireNamespace(pkg)) {

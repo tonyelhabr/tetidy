@@ -17,13 +17,16 @@ Depends:
 Imports: 
     dplyr,
     fuzzyjoin,
-    rlang,
+    rlang (>= 0.1.2),
     tibble,
     tidyr
 Suggests: 
     covr,
-    testthat
+    testthat,
+    spelling,
+    roxygen2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
+Language: en-US

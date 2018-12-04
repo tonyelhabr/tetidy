@@ -2,11 +2,11 @@
 % Please edit documentation in R/join.R
 \name{join_fuzzily}
 \alias{join_fuzzily}
-\title{Join two data.frames using fuzzy string matching.}
+\title{Join two \code{data.frame}s using fuzzy string matching.}
 \usage{
 join_fuzzily(x, y, mode = "inner", max_dist = 0, ...,
-  cols_join = intersect(names(x), names(y)), copy = FALSE,
-  suffix_x = "_x", suffix_y = "_y", suffix = c(suffix_x, suffix_y))
+  by = intersect(names(x), names(y)), copy = FALSE, suffix = c("_x",
+  "_y"))
 }
 \arguments{
 \item{x}{A tbl}
@@ -19,28 +19,29 @@ join_fuzzily(x, y, mode = "inner", max_dist = 0, ...,
 
 \item{...}{Arguments passed on to \code{\link{stringdist}}}
 
-\item{cols_join}{character. Names of columns in \code{x} and \code{y} to join upon.}
+\item{by}{Columns by which to join the two tables}
 
-\item{copy}{logical. Whether or not to keep common columns}
+\item{copy}{If \code{x} and \code{y} are not from the same data source,
+and \code{copy} is \code{TRUE}, then \code{y} will be copied into the
+same src as \code{x}.  This allows you to join tables across srcs, but
+it is a potentially expensive operation so you must opt into it.}
 
-\item{suffix_x, suffix_y}{For duplicate variables in \code{x} and \code{y}, these
-are used for differentiating the two. Alternatively, \code{suffix} can be specified directly
-(in the same manner for \code{suffix} in \code{dplyr}'s join functions).}
-
-\item{suffix}{dplyr::join}
+\item{suffix}{If there are non-joined duplicate variables in \code{x} and
+\code{y}, these suffixes will be added to the output to disambiguate them.
+Should be a character vector of length 2.}
 }
 \value{
-data.frame
+A \link[tibble:tibble-package]{tibble}.
 }
 \description{
-Join two data.frames using fuzzy string matching.
+Join two \code{data.frame}s using fuzzy string matching.
 }
 \details{
 This function is effectively a customized version of the \code{stringdist_join}
-functions in the \code{fuzzyjoin} package.
-Additionally, this function is primarily intended to be uzed before \code{tetidy::summarise_join_stats}
+functions in the \code{{fuzzyjoin}} package.
+Additionally, this function is primarily intended to be uzed before \code{tetidy::summarise_join_stats()}
 with \code{mode = "full"}.
 }
 \seealso{
-\code{\link[fuzzyjoin:stringdist_join]{fuzzyjoin::stringdist_join()}}
+\code{\link[fuzzyjoin:stringdist_join]{fuzzyjoin::stringdist_join()}} \code{\link[dplyr:inner_join]{dplyr::inner_join()}}
 }
