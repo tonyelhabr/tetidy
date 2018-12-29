@@ -3,7 +3,7 @@
 #' Calculate how "well" two `data.frame`s joined
 #'
 #' @description Calculates the join count and percentage (by number of rows missing)
-#' of a d`ata.frame` that is the results of a join.
+#' of a `data.frame` that is the results of a join.
 #' @details This function is mostly useful after calling `dplyr::full_join()`
 #' (or a similar function), although it can also be useful for `dplyr::left_join()`
 #' #' or `dplyr::right_join()`.
@@ -61,7 +61,7 @@ summarise_join_stats <-
 #' functions in the `{fuzzyjoin}` package.
 #' Additionally, this function is primarily intended to be uzed before `tetidy::summarise_join_stats()`
 #' with `mode = "full"`.
-#' @inheritParams fuzzyjoin::stringdist_join
+#' @inheritParams fuzzyjoin::stringdist_inner_join
 #' @inheritParams dplyr::inner_join
 #' # @param by character. Names of columns in `x` and `y` to join upon.
 #' # @param copy logical. Whether or not to keep common columns
@@ -70,7 +70,7 @@ summarise_join_stats <-
 #' # (in the same manner for `suffix` in `{dplyr}`'s join functions).
 #' @return A [tibble][tibble::tibble-package].
 #' @export
-#' @seealso [fuzzyjoin::stringdist_join()] [dplyr::inner_join()]
+#' @seealso [dplyr::inner_join()]
 join_fuzzily <-
   function(x,
            y,
@@ -93,9 +93,9 @@ join_fuzzily <-
 
     . <- NULL
     res <-
-      dplyr::rename_at(res, dplyr::vars(dplyr::ends_with(".x")), funs(gsub("\\.x", suffix_x, .)))
+      dplyr::rename_at(res, dplyr::vars(dplyr::ends_with(".x")), dplyr::funs(gsub("\\.x", suffix_x, .)))
     res <-
-      dplyr::rename_at(res, dplyr::vars(dplyr::ends_with(".y")), funs(gsub("\\.y", suffix_y, .)))
+      dplyr::rename_at(res, dplyr::vars(dplyr::ends_with(".y")), dplyr::funs(gsub("\\.y", suffix_y, .)))
 
     if(copy) {
       by_y <- rlang::quo_name(paste0(by, suffix_y))

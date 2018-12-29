@@ -1,22 +1,26 @@
 
 context("summarise")
 require("datasets")
+require("dplyr")
+# testthat::test_file("tests/testthat/test-summarise.R")
 
-test_that("summarise_stats() works with string `col`", {
+testthat::test_that("`summarise_stats()` works as expected with default values", {
+
+  # SE version.
   actual_df <- summarise_stats(mtcars, "mpg")
-  actual <- c(as.matrix(actual_df["mean"]))
+  actual <- actual_df %>% dplyr::pull(mean)
   expect <- mean(mtcars$mpg)
-  expect_equal(actual, expect)
-})
+  testthat::expect_equal(actual, expect)
 
-test_that("summarise_stats() works with symbol `col`", {
+  # NSE version.
   actual_df <- summarise_stats(mtcars, mpg)
-  actual <- c(as.matrix(actual_df["mean"]))
-  expect_equal(actual, expect)
+  actual <- actual_df %>% dplyr::pull(mean)
+  testthat::expect_equal(actual, expect)
+
 })
 
-test_that("summarise_stats() works with `tidy = TRUE`", {
-  actual_df <- summarise_stats(mtcars, mpg, tidy = TRUE)
-  expect_equal(ncol(actual_df), 2)
-  expect_equal(names(actual_df)[1], "stat")
+testthat::test_that("`summarise_stats()` works with non-default values", {
+  actual_df <- summarise_stats(mtcars, mpg, tidy = TRUE, key = "stat", value = "value")
+  testthat::expect_equal(ncol(actual_df), 2)
+  testthat::expect_equal(names(actual_df)[1], "stat")
 })

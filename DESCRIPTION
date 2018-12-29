@@ -17,9 +17,12 @@ Depends:
 Imports: 
     dplyr,
     fuzzyjoin,
+    purrr,
     rlang (>= 0.1.2),
+    stringr,
     tibble,
-    tidyr
+    tidyr,
+    tidyselect
 Suggests: 
     covr,
     testthat,
@@ -27,6 +30,6 @@ Suggests:
     roxygen2
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Language: en-US

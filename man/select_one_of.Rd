@@ -21,6 +21,11 @@ A \link[tibble:tibble-package]{tibble}.
 \description{
 Shorthand for \code{{dplyr}} functions called consecutively.
 }
+\details{
+There is probably a better way to implement this function internally.
+Should review \code{tidyselect::one_of()} and \code{tidyr::separate()}'s \code{into} argument.
+}
 \seealso{
 Other dplyr-cols: \code{\link{add_rnk_col}}
 }
+\concept{dplyr-cols}

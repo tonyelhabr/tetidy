@@ -23,7 +23,7 @@ This argument is taken by expression and supports
 \link[rlang:quasiquotation]{quasiquotation} (you can unquote column
 names and column positions).}
 
-\item{...}{Additional arguments passed to internal functions.}
+\item{...}{Additional arguments passed to internal \code{{base}}/\code{{stats}} functions.}
 
 \item{decreasing}{logical.  Should the sort be increasing or decreasing?
     For the \code{"radix"} method, this can be a vector of
@@ -44,3 +44,4 @@ This may be slower than \code{dplyr:;distinct()} +
 Other dplyr-combos: \code{\link{arrange_distinctly}},
   \code{\link{count_arrange}}
 }
+\concept{dplyr-combos}

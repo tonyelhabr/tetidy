@@ -1,3 +1,5 @@
+^cran-comments\.md$
+^\.covrignore$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.yml$

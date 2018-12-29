@@ -9,7 +9,7 @@ arrange_distinctly(data, ..., .keep_all = FALSE, .by_group = FALSE)
 \arguments{
 \item{data}{A \code{data.frame}.}
 
-\item{...}{Additional arguments passed to internal functions.}
+\item{...}{Additional arguments passed to internal \code{{base}}/\code{{stats}} functions.}
 
 \item{.keep_all}{If \code{TRUE}, keep all variables in \code{.data}.
 If a combination of \code{...} is not distinct, this keeps the
@@ -34,3 +34,4 @@ The logic for handling \code{...} is borrowed from a reivew of the internals for
 Other dplyr-combos: \code{\link{count_arrange}},
   \code{\link{pull_distinctly}}
 }
+\concept{dplyr-combos}

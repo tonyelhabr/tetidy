@@ -43,5 +43,5 @@ Additionally, this function is primarily intended to be uzed before \code{tetidy
 with \code{mode = "full"}.
 }
 \seealso{
-\code{\link[fuzzyjoin:stringdist_join]{fuzzyjoin::stringdist_join()}} \code{\link[dplyr:inner_join]{dplyr::inner_join()}}
+\code{\link[dplyr:inner_join]{dplyr::inner_join()}}
 }

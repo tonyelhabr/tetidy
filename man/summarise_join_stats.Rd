@@ -20,7 +20,7 @@ as well as \code{n_joined}.
 }
 \description{
 Calculates the join count and percentage (by number of rows missing)
-of a d\code{ata.frame} that is the results of a join.
+of a \code{data.frame} that is the results of a join.
 }
 \details{
 This function is mostly useful after calling \code{dplyr::full_join()}

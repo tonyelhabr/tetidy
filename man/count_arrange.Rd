@@ -4,12 +4,17 @@
 \alias{count_arrange}
 \title{\code{dplyr::count()} + \code{dplyr::arrange()}}
 \usage{
-count_arrange(data, ...)
+count_arrange(data, ..., sort = FALSE, .by_group = FALSE)
 }
 \arguments{
 \item{data}{A \code{data.frame}.}
 
-\item{...}{Additional arguments passed to internal functions.}
+\item{...}{Additional arguments passed to internal \code{{base}}/\code{{stats}} functions.}
+
+\item{sort}{if \code{TRUE} will sort output in descending order of \code{n}}
+
+\item{.by_group}{If \code{TRUE}, will sort first by grouping variable. Applies to
+grouped data frames only.}
 }
 \value{
 A \link[tibble:tibble-package]{tibble}.
@@ -34,3 +39,4 @@ The logic for handling \code{...} is borrowed from a reivew of the internals for
 Other dplyr-combos: \code{\link{arrange_distinctly}},
   \code{\link{pull_distinctly}}
 }
+\concept{dplyr-combos}

@@ -6,9 +6,11 @@
 \alias{tetidy-package}
 \title{tetidy: Tony's Personal Package}
 \description{
+\if{html}{\figure{logo.png}{options: align='right'}}
+
 This is a package with functions for that Tony
-commonly uses for data munging workflows. These functions mostly
-depend on other from the tidyverse.
+    commonly uses for data munging workflows. These functions mostly
+    depend on other from the tidyverse.
 }
 \author{
 \strong{Maintainer}: Tony ElHabr \email{anthonyelhabr@gmail.com}

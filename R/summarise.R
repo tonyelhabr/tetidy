@@ -17,11 +17,11 @@
 #' @param data A `data.frame`.
 #' @param col A character for the SE version; a symbol for NSE version.
 #'   The name of column in `data` on which to perform operations.
-#' @param na.rm A logical value passed to `{base}`\`{stats}` functions used internally.
-#' @param ... Additional arguments passed to internal functions.
+#' @param na.rm A logical value passed to `{base}`/`{stats}` functions used internally.
+#' @param ... Additional arguments passed to internal `{base}`/`{stats}` functions.
 #' @param tidy A logical value indicating whether to put output in long (i.e. "tidy") format.
-#' @param key,value Parameters corresponding with those of the same name for `tidyr::gather()`.
-#'   For this function, these should be characters.
+#' @param key,value,convert Parameters corresponding with those of the same name for `tidyr::gather()`.
+#'   For this function, `key` and `value` these should be characters.
 #' @return A [tibble][tibble::tibble-package].
 #' @rdname summarise_stats
 #' @seealso [skimr::skim()], [tidyr::gather()]
@@ -32,12 +32,13 @@ summarise_stats <-
            ...,
            tidy = FALSE,
            key = "stat",
-           value = "value") {
+           value = "value",
+           convert = TRUE) {
 
     data <- .validate_coerce_data(data)
 
-    col_chr <- rlang::as_string(ensym2(col))
-    .validate_col(data, col)
+    col <- ensym2(col)
+    .validate_col(data, rlang::as_string(col))
 
     .validate_lgl(na.rm)
     .validate_lgl(tidy)
@@ -78,14 +79,13 @@ summarise_stats <-
 
     if (tidy) {
       if (!is.null(cols_grp)) {
-        cols_gath <- setdiff(names(res), cols_grp)
+        cols_gath_chr <- setdiff(names(res), cols_grp)
         cols_gath <- rlang::syms(cols_gath_chr)
         res <-
-          suppressWarnings(tidyr::gather(res, key = key, value = value, !!!cols_gath, convert = TRUE))
+          suppressWarnings(tidyr::gather(res, key = !!key, value = !!value, !!!cols_gath, convert = convert))
       } else {
-        res <- suppressWarnings(tidyr::gather(res, stat, value, convert = TRUE))
+        res <- suppressWarnings(tidyr::gather(res, key = !!key, value = !!value, convert = convert))
       }
-      res <- tibble::as_tibble(res)
     }
     res
 

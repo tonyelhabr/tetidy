@@ -4,7 +4,8 @@
 \alias{add_rnk_col}
 \title{\code{dplyr::mutate(... dplyr::row_number(dplyr::desc(.)))}}
 \usage{
-add_rnk_col(data, col, col_out = "rnk", arrange = TRUE, pretty = TRUE)
+add_rnk_col(data, col, col_out = "rnk", arrange = TRUE,
+  pretty = TRUE)
 }
 \arguments{
 \item{data}{A \code{data.frame}.}
@@ -14,7 +15,9 @@ The name of column in \code{data} on which to perform operations.}
 
 \item{col_out}{Name of the new column to create, as a string or symbol.}
 
-\item{arrange}{If \code{TRUE}, will arrange \code{data} according to \code{col_out}.}
+\item{arrange}{If \code{TRUE}, will arrange \code{data} according to \code{col_out}
+(calling \code{dplyr::arrange()}). Does not currently support grouped arranging
+(i.e. via \code{.by_group}).}
 
 \item{pretty}{If \code{TRUE}, will re-order columns such that \code{col_out} is the first column.}
 }
@@ -33,3 +36,4 @@ Documentation for \code{col} and \code{col_out} is modified
 \seealso{
 Other dplyr-cols: \code{\link{select_one_of}}
 }
+\concept{dplyr-cols}

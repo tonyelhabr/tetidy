@@ -78,6 +78,7 @@ arrange_distinctly <-
 #'
 #' @inheritSection arrange_distinctly Borrowing from the `{tidyverse}`
 #' @inheritParams arrange_distinctly
+#' @inheritParams dplyr::count
 #' @return A [tibble][tibble::tibble-package].
 #' @rdname count_arrange
 #' @export

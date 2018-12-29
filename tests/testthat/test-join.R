@@ -1,14 +1,14 @@
 
 context("join")
-
 require("dplyr")
+# testthat::test_file("tests/testthat/test-join.R")
 
 # https://github.com/tidyverse/dplyr/blob/master/tests/testthat/test-joins.r
-a <- data.frame(x = 1:3, y = 2:4)
-b <- data.frame(x = 3:5, z = 3:5)
-df <- full_join(a, b, "x")
+a <- dplyr::data_frame(x = 1:3, y = 2:4)
+b <- dplyr::data_frame(x = 3:5, z = 3:5)
+df <- dplyr::full_join(a, b, "x")
 
-test_that("join", {
+testthat::test_that("`summarise_join_stats()` works as expected with default values", {
 
   actual <- summarise_join_stats(df, "y", "z")
   expect <-
@@ -23,11 +23,11 @@ test_that("join", {
       x_in_y_pct = 33.33,
       y_in_x_pct = 33.33
     )
-  expect_equal(nrow(actual), 1)
-  expect_equal(ncol(actual), 9)
-  # expect_equal(actual, expect)
+  testthat::expect_equal(nrow(actual), 1)
+  testthat::expect_equal(ncol(actual), 9)
+  # testthat::expect_equal(actual, expect)
 
   actual_2 <- summarise_join_stats(df, y, z)
-  expect_equal(actual_2, actual)
+  testthat::expect_equal(actual_2, actual)
 
 })

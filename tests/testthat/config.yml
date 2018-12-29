@@ -1,8 +1,0 @@
-default:
-  a: true
-  b: "data"
-  c: 42
-  d: 3.14
-
-production:
-  

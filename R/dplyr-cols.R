@@ -1,5 +1,30 @@
 
 # Source: personal `{sportspredict}` project.
+# reorder_one_of_at <-
+#   function(data, cols_order) {
+#     .validate_data(data)
+#     .validate_cols(data, cols_order)
+#
+#     cols <- names(data)
+#     cols_in <- intersect(cols_order, cols)
+#     cols_nin <- setdiff(cols, cols_order)
+#     # length(cols); length(cols_in); length(cols_nin); length(cols_order)
+#     # setdiff(cols, c(cols_in, cols_nin))
+#     cols_fct <- factor(cols, levels = c(cols_in, cols_nin))
+#     dplyr::select(data, tidyselect::one_of(levels(cols_fct)))
+#   }
+#
+# select_one_of_at <-
+#   function(data, cols, cols_order = cols) {
+#     .validate_data(data)
+#     .validate_cols(data, cols)
+#
+#     if(cols_order != cols) {
+#       .validate_cols(data, cols_order)
+#     }
+#     cols_fct <- factor(cols, levels = cols_order)
+#     dplyr::select(data, tidyselect::one_of(levels(cols_fct)))
+#   }
 
 #' `dplyr::select(data, tidyselect::one_of(cols), tidyselect::everything())`
 #'
@@ -27,7 +52,7 @@ select_one_of <-
 
     if(!drop) {
       cols_in <- intersect(cols, .cols)
-      cols_nin <- setdiff(.cols, cols_order)
+      cols_nin <- setdiff(.cols, cols)
       # length(cols); length(cols_in); length(cols_nin); length(cols_order)
       # setdiff(cols, c(cols_in, cols_nin))
       cols_fct <- factor(.cols, levels = c(cols_in, cols_nin))
@@ -46,7 +71,7 @@ select_one_of <-
 #' @export
 rank_unique <-
   function(x) {
-    stopifnot(is.numeric(x))
+    # stopifnot(is.numeric(x))
     dplyr::row_number(dplyr::desc(x))
   }
 
@@ -60,7 +85,9 @@ rank_unique <-
 #'
 #' @inheritParams summarise_stats
 #' @param col_out Name of the new column to create, as a string or symbol.
-#' @param arrange If `TRUE`, will arrange `data` according to `col_out`.
+#' @param arrange If `TRUE`, will arrange `data` according to `col_out`
+#' (calling `dplyr::arrange()`). Does not currently support grouped arranging
+#' (i.e. via `.by_group`).
 #' @param pretty If `TRUE`, will re-order columns such that `col_out` is the first column.
 #' @return A [tibble][tibble::tibble-package].
 #' @rdname add_rnk_col
@@ -71,17 +98,16 @@ add_rnk_col <-
 
     data <- .validate_coerce_data(data)
 
-    col <- rlang::as_string(ensym2(col))
-    .validate_col(data, col)
+    col <- ensym2(col)
+    .validate_col(data, rlang::as_string(col))
 
-    col_out <- rlang::as_string(ensym2(col_out))
-    .validate_col_out(data, col_out)
+    col_out <- ensym2(col_out)
+    .validate_col_out(data, rlang::as_string(col_out))
 
     .validate_lgl(arrange)
     .validate_lgl(pretty)
 
     res <- dplyr::mutate(data, !!col_out := rank_unique(!!col))
-    res <- dplyr::arrange(res, !!col_out)
 
     if(arrange) {
       res <- dplyr::arrange(res, !!col_out)

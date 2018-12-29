@@ -1,5 +1,5 @@
 
-# Source: personal `{sportspredict}` project.
+# Reference: personal `{sportspredict}` project.
 
 get_cols_sep <-
   function(data, col, sep) {
