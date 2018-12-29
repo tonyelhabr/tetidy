@@ -13,7 +13,7 @@ Description: This is a package with functions for that Tony
     depend on other from the tidyverse.
 License: MIT + file LICENSE
 Depends:
-    R (>= 3.4.1)
+    R (>= 3.4)
 Imports: 
     dplyr,
     fuzzyjoin,

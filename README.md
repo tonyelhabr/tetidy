@@ -1,12 +1,16 @@
 
-[![Project Status: WIP – Initial development is in progress, but there
-has not yet been a stable, usable release suitable for the
+[![Project Status: WIP Ã¢â‚¬â€œ Initial development is in progress, but
+there has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 
 <!-- badges: start -->
 
 [![Travis build
 status](https://travis-ci.org/tonyelhabr/tetidy.svg?branch=master)](https://travis-ci.org/tonyelhabr/tetidy)
+[![Codecov test
+coverage](https://codecov.io/gh/tonyelhabr/tetidy/branch/master/graph/badge.svg)](https://codecov.io/gh/tonyelhabr/tetidy?branch=master)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/tonyelhabr/tetidy?branch=master&svg=true)](https://ci.appveyor.com/project/tonyelhabr/tetidy)
 <!-- badges: end -->
 
 # tetidy <img src="man/figures/logo.png" align="right"/>
@@ -25,9 +29,13 @@ projects.
 Here is a list of all functions in the
     package.
 
-    #> [1] "add_rnk_col"          "arrange_distinctly"   "count_arrange"       
-    #> [4] "join_fuzzily"         "pull_distinctly"      "rank_unique"         
-    #> [7] "select_one_of"        "summarise_join_stats" "summarise_stats"
+    #>  [1] "!!"                   "!!!"                  ":="                  
+    #>  [4] "add_rnk_col"          "arrange_distinctly"   "convert_list_to_tbl" 
+    #>  [7] "count_arrange"        "do_call_with"         "ensym2"              
+    #> [10] "get_cols_sep"         "join_fuzzily"         "library.dynam.unload"
+    #> [13] "pull_distinctly"      "rank_unique"          "select_one_of"       
+    #> [16] "separate_cols_max"    "summarise_join_stats" "summarise_stats"     
+    #> [19] "system.file"          "unlist_tidily"
 
 ## Things To Do/Consider To Be More “`{tidyverse}`-like”
 

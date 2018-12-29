@@ -61,13 +61,10 @@ summarise_join_stats <-
 #' functions in the `{fuzzyjoin}` package.
 #' Additionally, this function is primarily intended to be uzed before `tetidy::summarise_join_stats()`
 #' with `mode = "full"`.
-#' @inheritParams fuzzyjoin::stringdist_inner_join
 #' @inheritParams dplyr::inner_join
-#' # @param by character. Names of columns in `x` and `y` to join upon.
-#' # @param copy logical. Whether or not to keep common columns
-#' # @param suffix character (vector). For duplicate variables in `x` and `y`, this vector of
-#' # length two is used for differentiating the two.
-#' # (in the same manner for `suffix` in `{dplyr}`'s join functions).
+#' @param mode From `stringdist::stringdist_join()` documentation: One of "inner", "left", "right", "full" "semi", or "anti".
+#' @param max_dist From `stringdist::stringdist_join()` documentation: Maximum distance to use for joining.
+#' @param ... From `stringdist::stringdist_join()` documentation: Arguments passed on to `stringdist`.
 #' @return A [tibble][tibble::tibble-package].
 #' @export
 #' @seealso [dplyr::inner_join()]

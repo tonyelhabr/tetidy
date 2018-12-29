@@ -2,11 +2,12 @@
 output: github_document
 ---
  
-[![Project Status: WIP â€“ Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![Project Status: WIP Ã¢â‚¬â€œ Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 
 <!-- badges: start -->
 [![Travis build status](https://travis-ci.org/tonyelhabr/tetidy.svg?branch=master)](https://travis-ci.org/tonyelhabr/tetidy)
 [![Codecov test coverage](https://codecov.io/gh/tonyelhabr/tetidy/branch/master/graph/badge.svg)](https://codecov.io/gh/tonyelhabr/tetidy?branch=master)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/tonyelhabr/tetidy?branch=master&svg=true)](https://ci.appveyor.com/project/tonyelhabr/tetidy)
 <!-- badges: end -->
 
 ```{r echo = FALSE}

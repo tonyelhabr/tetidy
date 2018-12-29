@@ -9,17 +9,25 @@ join_fuzzily(x, y, mode = "inner", max_dist = 0, ...,
   "_y"))
 }
 \arguments{
-\item{x}{A tbl}
+\item{x}{tbls to join}
 
-\item{y}{A tbl}
+\item{y}{tbls to join}
 
-\item{mode}{One of "inner", "left", "right", "full" "semi", or "anti"}
+\item{mode}{From \code{stringdist::stringdist_join()} documentation: One of "inner", "left", "right", "full" "semi", or "anti".}
 
-\item{max_dist}{Maximum distance to use for joining}
+\item{max_dist}{From \code{stringdist::stringdist_join()} documentation: Maximum distance to use for joining.}
 
-\item{...}{Arguments passed on to \code{\link{stringdist}}}
+\item{...}{From \code{stringdist::stringdist_join()} documentation: Arguments passed on to \code{stringdist}.}
 
-\item{by}{Columns by which to join the two tables}
+\item{by}{a character vector of variables to join by.  If \code{NULL}, the
+default, \code{*_join()} will do a natural join, using all variables with
+common names across the two tables. A message lists the variables so
+that you can check they're right (to suppress the message, simply
+explicitly list the variables that you want to join).
+
+To join by different variables on x and y use a named vector.
+For example, \code{by = c("a" = "b")} will match \code{x.a} to
+\code{y.b}.}
 
 \item{copy}{If \code{x} and \code{y} are not from the same data source,
 and \code{copy} is \code{TRUE}, then \code{y} will be copied into the
