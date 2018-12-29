@@ -29,13 +29,9 @@ projects.
 Here is a list of all functions in the
     package.
 
-    #>  [1] "!!"                   "!!!"                  ":="                  
-    #>  [4] "add_rnk_col"          "arrange_distinctly"   "convert_list_to_tbl" 
-    #>  [7] "count_arrange"        "do_call_with"         "ensym2"              
-    #> [10] "get_cols_sep"         "join_fuzzily"         "library.dynam.unload"
-    #> [13] "pull_distinctly"      "rank_unique"          "select_one_of"       
-    #> [16] "separate_cols_max"    "summarise_join_stats" "summarise_stats"     
-    #> [19] "system.file"          "unlist_tidily"
+    #> [1] ":="                   "add_rnk_col"          "arrange_distinctly"  
+    #> [4] "count_arrange"        "join_fuzzily"         "pull_distinctly"     
+    #> [7] "rank_unique"          "select_one_of"        "summarise_join_stats"
 
 ## Things To Do/Consider To Be More “`{tidyverse}`-like”
 
