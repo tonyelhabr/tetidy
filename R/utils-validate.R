@@ -66,8 +66,8 @@
 
 .validate_col_out <- function(data, col, nm = deparse(substitute(col))) {
   stopifnot(is.character(col))
-  stopfintot(length(col) == 1)
-  stopfinot(length(intersect(names(data), col)) == 0)
+  stopifnot(length(col) == 1)
+  stopifnot(length(intersect(names(data), col)) == 0)
 }
 
 .validate_lgl <- function(x, nm = deparse(substitute(x))) {

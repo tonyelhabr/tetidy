@@ -1,16 +1,18 @@
 
 context("dplyr-cols")
 require("datasets")
-# testthat::test_file("tests/testthat/test-[file].R")
+require("dplyr")
+require("tibble")
+# testthat::test_file("tests/testthat/test-dplyr-cols.R")
 
-test_that("add_rnk_col", {
+test_that("`add_rnk_col()` works as expected", {
 
   actual <- add_rnk_col(mtcars, "mpg", arrange = TRUE, pretty = TRUE)
-  expect <- mtcars
-  expect <- with(expect, expect[order(-mpg),])
-  expect$rnk <- seq(1:nrow(expect))
-  expect <- expect[, c("rnk", names(mtcars))]
-  rownames(expect) <- NULL
+  expect <-
+    mtcars %>%
+    tibble::as_tibble() %>%
+    mutate(rnk = row_number(desc(mpg))) %>%
+    arrange(rnk)
   expect_equal(actual, expect)
 
   # Test NSE version.

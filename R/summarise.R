@@ -25,10 +25,7 @@
 #' @return A [tibble][tibble::tibble-package].
 #' @rdname summarise_stats
 #' @seealso [skimr::skim()], [tidyr::gather()]
-#' @importFrom stats median sd quantile
-#' @importFrom tidyr gather
-#' @importFrom tibble as_tibble
-summarise_stats_at <-
+summarise_stats <-
   function(data,
            col,
            na.rm = TRUE,
@@ -37,8 +34,11 @@ summarise_stats_at <-
            key = "stat",
            value = "value") {
 
-    .validate_data(data)
+    data <- .validate_coerce_data(data)
+
+    col_chr <- rlang::as_string(ensym2(col))
     .validate_col(data, col)
+
     .validate_lgl(na.rm)
     .validate_lgl(tidy)
 
@@ -50,7 +50,6 @@ summarise_stats_at <-
     } else {
       cols_grp <- NULL
     }
-    col <- rlang::sym(col)
     n <- . <- NULL
 
     data <- dplyr::mutate(data, n = sum(!is.na(!!col)))
@@ -61,7 +60,7 @@ summarise_stats_at <-
         dplyr::vars(!!col),
         dplyr::funs(
           n = dplyr::first(n),
-          mean = mean(., na.rm = na.rm, ...),
+          mean = base::mean(., na.rm = na.rm, ...),
           median = stats::median(., ...),
           sd = stats::sd(., na.rm = na.rm, ...),
           min = base::min(., na.rm = na.rm, ...),
@@ -90,11 +89,4 @@ summarise_stats_at <-
     }
     res
 
-  }
-
-#' @rdname summarise_stats
-#' @export
-summarise_stats <-
-  function(data, col, ...) {
-    summarise_stats_at(data = data, col = rlang::quo_text(rlang::enquo(col)), ...)
   }

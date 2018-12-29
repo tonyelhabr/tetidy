@@ -1,12 +1,18 @@
 
 context("dplyr-combos")
 require("datasets")
-# testthat::test_file("tests/testthat/test-[file].R")
+require("dplyr")
+require("tibble")
+# testthat::test_file("tests/testthat/test-dplyr-combos.R")
 
 test_that("pull_distinctly() works as expected", {
 
   actual <- pull_distinctly(mtcars, "carb")
-  expect <- sort(unique(mtcars$carb))
+  expect <-
+    mtcars %>%
+    pull(carb) %>%
+    unique() %>%
+    sort()
   expect_equal(actual, expect)
 
   actual <- pull_distinctly(mtcars, carb)
@@ -14,10 +20,16 @@ test_that("pull_distinctly() works as expected", {
 
 })
 
-test_that("arrange_distinctly() works as expected", {
+test_that("arrange_distinctly() works as expected with one column", {
 
+  # debug(arrange_distinctly)
+  # undebug(arrange_distinctly)
   actual <- arrange_distinctly(mtcars, "carb")
-  expect <- tibble::as_tibble(carb = sort(unique(mtcars$carb)))
+  expect <-
+    mtcars %>%
+    tibble::as_tibble() %>%
+    dplyr::distinct(carb) %>%
+    dplyr::arrange(carb)
   expect_equal(actual, expect)
 
   actual <- arrange_distinctly(mtcars, carb)
@@ -25,16 +37,30 @@ test_that("arrange_distinctly() works as expected", {
 
 })
 
-test_that("count_arrange() works as expected", {
+test_that("arrange_distinctly() works as expected with more than one column", {
+
+  actual <- arrange_distinctly(mtcars, "carb", "cyl")
+  expect <-
+    mtcars %>%
+    tibble::as_tibble() %>%
+    dplyr::distinct(carb, cyl) %>%
+    dplyr::arrange(carb, cyl)
+  expect_equal(actual, expect)
+
+  actual <- arrange_distinctly(mtcars, carb, cyl)
+  expect_equal(actual, expect)
+
+})
+
+
+test_that("count_arrange() works as expected with one column", {
 
   actual <- count_arrange(mtcars, "carb")
-  expect <- tibble::as_tibble(mtcars)
-  expect_ <- with(expect, aggregate(expect, by = list(carb), FUN = length))
-  expect <- expect_[, c("Group.1", "carb")]
-  expect <- with(expect, expect[order(Group.1),])
-  expect$n <- expectf$carb
-  expect$carb <- expect$Group.1
-  expect <- expect[, c("carb", "n")]
+  expect <-
+    mtcars %>%
+    tibble::as_tibble() %>%
+    dplyr::count(carb) %>%
+    dplyr::arrange(carb)
   expect_equal(actual, expect)
 
   actual <- count_arrange(mtcars, carb)
@@ -42,3 +68,17 @@ test_that("count_arrange() works as expected", {
 
 })
 
+test_that("count_arrange() works as expected with more than one column", {
+
+  actual <- count_arrange(mtcars, "carb", "cyl")
+  expect <-
+    mtcars %>%
+    tibble::as_tibble() %>%
+    dplyr::count(carb, cyl) %>%
+    dplyr::arrange(carb, cyl)
+  expect_equal(actual, expect)
+
+  actual <- count_arrange(mtcars, carb, cyl)
+  expect_equal(actual, expect)
+
+})

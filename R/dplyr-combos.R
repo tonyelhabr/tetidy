@@ -15,7 +15,7 @@
 #' @family dplyr-combos
 pull_distinctly <-
   function(.data, var = -1, ..., decreasing = FALSE) {
-    data <- .validate_coerce_data(data)
+    .data <- .validate_coerce_data(.data)
 
     var <- tidyselect::vars_pull(names(.data), !!rlang::enquo(var))
     sort(unique(.data[[var]]), decreasing = decreasing, ...)
@@ -41,11 +41,29 @@ arrange_distinctly <-
   function(data, ..., .keep_all = FALSE, .by_group = FALSE) {
     data <- .validate_coerce_data(data)
 
-    cols <- rlang::enquos(...)
-    # .validate_cols(data, cols)
+    # n_dots <- rlang::dots_n(...)
+    # # Reference: [tidyr::unite](https://github.com/tidyverse/tidyr/blob/master/R/unite.R)
+    # if (n_dots == 0) {
+    #   return(data)
+    # } else if (n_dots == 1) {
+    #   cols <- as.character(rlang::ensyms(...))
+    # } else {
+    #   cols <- tidyselect::vars_select(colnames(data), ...)
+    # }
+    quos <- rlang::quos(...)
+    if (rlang::is_empty(quos)) {
+      return(data)
+    } else {
+      cols <- unname(tidyselect::vars_select(names(data), !!! quos))
+      cols <- rlang::syms(cols)
+    }
 
     res <- dplyr::distinct(data, !!!cols, .keep_all = .keep_all)
-    res <- dplyr::arrange(res, !!!cols, .by_group = .by_group)
+    if(!dplyr::is_grouped_df(data)) {
+      res <- dplyr::arrange(res, !!!cols)
+    } else {
+      res <- dplyr::arrange(res, !!!cols, .by_group = .by_group)
+    }
     res
   }
 
@@ -65,18 +83,30 @@ arrange_distinctly <-
 #' @export
 #' @family dplyr-combos
 count_arrange <-
-  function(data, ...) {
+  function(data, ..., sort = FALSE, .by_group = FALSE) {
 
     data <- .validate_coerce_data(data)
 
-    # Reference: [tidyr::unite](https://github.com/tidyverse/tidyr/blob/master/R/unite.R)
-    if (rlang::dots_n(...) == 0) {
+    # # Reference: [tidyr::unite](https://github.com/tidyverse/tidyr/blob/master/R/unite.R)
+    # # This is the same logic applied in `arrange_distinctly()`.
+    # if (rlang::dots_n(...) == 0) {
+    #   return(data)
+    # } else {
+    #   cols <- tidyselect::vars_select(colnames(data), ...)
+    # }
+    quos <- rlang::quos(...)
+    if (rlang::is_empty(quos)) {
       return(data)
     } else {
-      cols <- tidyselect::vars_select(colnames(data), ...)
+      cols <- unname(tidyselect::vars_select(names(data), !!! quos))
+      cols <- rlang::syms(cols)
     }
 
-    res <- dplyr::count(data, !!!cols)
-    res <- dplyr::arrange(res, !!!cols)
+    res <- dplyr::count(data, !!!cols, sort = sort)
+    if(!dplyr::is_grouped_df(data)) {
+      res <- dplyr::arrange(res, !!!cols)
+    } else {
+      res <- dplyr::arrange(res, !!!cols, .by_group = .by_group)
+    }
     res
   }
