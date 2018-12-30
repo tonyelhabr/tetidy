@@ -17,5 +17,7 @@ if(interactive()) {
   suppressWarnings(suppressPackageStartupMessages(library("devtools")))
   suppressWarnings(suppressPackageStartupMessages(library("usethis")))
   suppressWarnings(suppressPackageStartupMessages(library("testthat")))
+  suppressWarnings(suppressPackageStartupMessages(library("travis")))
+  suppressWarnings(suppressPackageStartupMessages(library("pkgdown")))
   devtools::load_all()
 }

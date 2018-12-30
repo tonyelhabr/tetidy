@@ -37,7 +37,7 @@ A vector (of the same type as \code{var}).
 Shorthand for \code{{dplyr}} functions called consecutively.
 }
 \details{
-This may be slower than \code{dplyr:;distinct()} +
+This may be slower than \code{dplyr::distinct()} +
 \code{dplyr::arrange()} + \code{dplyr::pull()} (which was the original implementation).
 }
 \seealso{

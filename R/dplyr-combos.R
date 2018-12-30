@@ -3,7 +3,7 @@
 #'
 #' Shorthand for `{dplyr}` functions called consecutively.
 #'
-#' @details This may be slower than `dplyr:;distinct()` +
+#' @details This may be slower than `dplyr::distinct()` +
 #'   `dplyr::arrange()` + `dplyr::pull()` (which was the original implementation).
 #' @inheritParams summarise_stats
 #' @inheritParams dplyr::pull
@@ -27,11 +27,11 @@ pull_distinctly <-
 #' Shorthand for `{dplyr}` functions called consecutively.
 #'
 #' @section Borrowing from the `{tidyverse}`:
-#'   The logic for handling `...` is borrowed from a reivew of the internals for
+#'   The logic for handling `...` is borrowed from a review of the internals for
 #'   `tidyr::unite()` and `tidyr::gather()`.
 #'
-#' @inheritParams summarise_stats
 #' @inheritParams dplyr::distinct
+#' @inheritParams summarise_stats
 #' @inheritParams dplyr::arrange
 #' @rdname arrange_distinctly
 #' @return A [tibble][tibble::tibble-package].

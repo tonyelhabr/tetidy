@@ -9,7 +9,9 @@ arrange_distinctly(data, ..., .keep_all = FALSE, .by_group = FALSE)
 \arguments{
 \item{data}{A \code{data.frame}.}
 
-\item{...}{Additional arguments passed to internal \code{{base}}/\code{{stats}} functions.}
+\item{...}{Optional variables to use when determining uniqueness. If there
+are multiple rows for a given combination of inputs, only the first
+row will be preserved. If omitted, will use all variables.}
 
 \item{.keep_all}{If \code{TRUE}, keep all variables in \code{.data}.
 If a combination of \code{...} is not distinct, this keeps the
@@ -26,7 +28,7 @@ Shorthand for \code{{dplyr}} functions called consecutively.
 }
 \section{Borrowing from the \code{{tidyverse}}}{
 
-The logic for handling \code{...} is borrowed from a reivew of the internals for
+The logic for handling \code{...} is borrowed from a review of the internals for
 \code{tidyr::unite()} and \code{tidyr::gather()}.
 }
 

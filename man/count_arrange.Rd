@@ -9,7 +9,9 @@ count_arrange(data, ..., sort = FALSE, .by_group = FALSE)
 \arguments{
 \item{data}{A \code{data.frame}.}
 
-\item{...}{Additional arguments passed to internal \code{{base}}/\code{{stats}} functions.}
+\item{...}{Optional variables to use when determining uniqueness. If there
+are multiple rows for a given combination of inputs, only the first
+row will be preserved. If omitted, will use all variables.}
 
 \item{sort}{if \code{TRUE} will sort output in descending order of \code{n}}
 
@@ -31,7 +33,7 @@ mistakenly using this function in such a manner).
 }
 \section{Borrowing from the \code{{tidyverse}}}{
 
-The logic for handling \code{...} is borrowed from a reivew of the internals for
+The logic for handling \code{...} is borrowed from a review of the internals for
 \code{tidyr::unite()} and \code{tidyr::gather()}.
 }
 

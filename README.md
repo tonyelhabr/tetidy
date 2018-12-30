@@ -15,7 +15,7 @@ status](https://ci.appveyor.com/api/projects/status/github/tonyelhabr/tetidy?bra
 
 # tetidy <img src="man/figures/logo.png" align="right"/>
 
-## Introduction
+## Overview
 
 This package contains `{tidyverse}`-like functions that I use often in
 projects.
@@ -24,7 +24,7 @@ projects.
 
 `remotes::install_github("tonyelhabr/tetidy")`.
 
-## Notes
+## Usage
 
 Here is a list of all functions in the
     package.
@@ -33,7 +33,11 @@ Here is a list of all functions in the
     #> [4] "count_arrange"        "join_fuzzily"         "pull_distinctly"     
     #> [7] "rank_unique"          "select_one_of"        "summarise_join_stats"
 
-## Things To Do/Consider To Be More “`{tidyverse}`-like”
+## Examples
+
+TODO\!
+
+## Aside: Things To Do/Consider To Be More “`{tidyverse}`-like”
 
 ### In General
 
@@ -147,10 +151,6 @@ Here is a list of all functions in the
         `yaml` to some other format (e.g. `{argparser}`-acceptable
         format).
 
-### “Lesser”-Known Example Packages
+### “Lesser”-Known Example Packages (to Emulate)
 
   - [`{srvyr}`](https://github.com/gergness/srvyr/)
-
-## Examples
-
-TODO\!

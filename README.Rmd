@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 # tetidy <img src="man/figures/logo.png" align="right"/>
 
-##  Introduction
+## Overview
 
 This package contains `{tidyverse}`-like functions that I use often in projects.
 
@@ -30,7 +30,7 @@ This package contains `{tidyverse}`-like functions that I use often in projects.
 
 `remotes::install_github("tonyelhabr/tetidy")`.
 
-## Notes
+## Usage
 
 Here is a list of all functions in the package.
 
@@ -39,8 +39,11 @@ library("tetidy")
 ls("package:tetidy")
 ```
 
+## Examples
 
-## Things To Do/Consider To Be More "`{tidyverse}`-like"
+TODO!
+
+## Aside: Things To Do/Consider To Be More "`{tidyverse}`-like"
 
 ### In General
 
@@ -126,10 +129,7 @@ arguments to .f".)
     - [ ] Add tests (perhaps specifically tailored to converting `yaml` to some
     other format (e.g. `{argparser}`-acceptable format).
 
-### "Lesser"-Known Example Packages
+### "Lesser"-Known Example Packages (to Emulate)
 - [`{srvyr}`](https://github.com/gergness/srvyr/)
 
-## Examples
-
-TODO!
 
